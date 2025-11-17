@@ -1,0 +1,35 @@
+#include <stdio.h> // Permite usar funções de entrada e saída, como printf() e scanf().
+#include <string.h> // Permite usar funções para manipular strings, como strlen().
+
+int main() { // Início da função principal do programa.
+    char texto[15]; // Cria um vetor de caracteres (string) com espaço para até 14 letras + o caractere nulo \0.
+    int shift; // Variável que guardará o valor do deslocamento (chave de criptografia).
+
+    printf("Digite uma palavra: "); // Mostra mensagem pedindo para o usuário digitar a palavra.
+    scanf("%15s", texto); // Lê a palavra digitada (limitando a 15 caracteres) e guarda no array texto.
+
+    printf("Digite o shift: ");// Pede ao usuário o valor do deslocamento inicial.
+    scanf("%d", &shift); // Lê um número inteiro (o deslocamento inicial) e armazena na variável shift.
+
+    for (int i = 0; i < strlen(texto); i++) { // Inicia o PRIMEIRO laço que percorre cada caractere da string texto.
+        if (texto[i] >= 'a' && texto[i] <= 'z') { // Se o caractere atual for uma letra minúscula (de 'a' a 'z').
+            texto[i] = ((texto[i] - 'a' + shift) % 26) + 'a'; // Criptografa a letra minúscula usando a Cifra de César com o shift inicial.
+        }
+        else if (texto[i] >= 'A' && texto[i] <= 'Z') { // Caso contrário, se o caractere for uma letra maiúscula (de 'A' a 'Z').
+            texto[i] = ((texto[i] - 'A' + shift) % 26) + 'A'; // Criptografa a letra maiúscula usando a Cifra de César com o 'shift' inicial.
+        }
+    } // Fim do primeiro laço. O 'texto agora está criptografado uma vez.
+
+    for (int i = 0; i < strlen(texto); i++) { // Inicia o segundo laço que percorre o texto (já criptografado) novamente.
+        if (texto[i] >= 'a' && texto[i] <= 'z') { // Se o caractere atual for uma letra minúscula (de a até z).
+            texto[i] = ((texto[i] - 'a' + shift) % 26) + 'a'; // Criptografa a letra minúscula NOVAMENTE com o valor de shift atual.
+        }
+        else if (texto[i] >= 'A' && texto[i] <= 'Z') { // Caso contrário, se o caractere for uma letra maiúscula (de 'A' a 'Z').
+            texto[i] = ((texto[i] - 'A' + shift) % 26) + 'A'; // Criptografa a letra maiúscula NOVAMENTE com o valor de shift atual.
+        }
+        shift = (shift + 3) % 26; // Altera o valor do deslocamento (shift) para o PRÓXIMO caractere, somando 3 e garantindo que fique entre 0 e 25.
+    } // Fim do segundo laço. O texto agora está duplamente criptografado com chaves variáveis.
+
+    printf("Texto criptografado: %s\n", texto); // Imprime a string texto com a palavra final, duplamente criptografada.
+    return 0; // Indica que o programa terminou com sucesso.
+}
